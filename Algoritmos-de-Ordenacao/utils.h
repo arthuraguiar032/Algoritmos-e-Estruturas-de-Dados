@@ -7,4 +7,6 @@ void imprime_vetor(int vetor[], int tamanho);
 
 void le_vetor(int vetor[], int tamanho);
 
+void troca(int vetor[], int i, int j);
+
 #endif

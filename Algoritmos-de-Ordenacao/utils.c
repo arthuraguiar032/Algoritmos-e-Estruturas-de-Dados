@@ -25,3 +25,9 @@ void le_vetor(int vetor[], int tamanho){
 		scanf("%d", &vetor[i]);
 	}
 }
+
+void troca(int vetor[], int i, int j){
+	int temp = vetor[i];
+	vetor[i] = vetor[j];
+	vetor[j] = temp;
+}
