@@ -1,12 +1,12 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-void preenche_vetor(int vetor[], int tamanho);
+void preenche_vetor(long int vetor[], long int tamanho);
 
-void imprime_vetor(int vetor[], int tamanho);
+void imprime_vetor(long int vetor[], long int tamanho);
 
-void le_vetor(int vetor[], int tamanho);
+void le_vetor(long int vetor[], long int tamanho);
 
-void troca(int vetor[], int i, int j);
+void troca(long int vetor[], long int i, long int j);
 
 #endif

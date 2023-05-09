@@ -1,9 +1,12 @@
 #include "utils.h"
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void merge(int vetor[], int tamanho) {
-	int meio = tamanho / 2;
-	int top_esq = 0, top_dir = meio, i = 0;
-	int aux[tamanho];
+void merge(long int vetor[], long int tamanho) {
+	long int meio = tamanho / 2;
+	long int top_esq = 0, top_dir = meio, i = 0;
+	long int *aux = (long int*) malloc(tamanho * sizeof(long int));
 
 	while (top_esq < meio && top_dir < tamanho){
     	if(vetor[top_esq] <= vetor[top_dir]){
@@ -34,10 +37,12 @@ void merge(int vetor[], int tamanho) {
 	for(i = 0; i<tamanho; i++){
     	vetor[i] = aux[i];
 	}
+
+	free(aux);
 }
 
-int merge_sort(int vetor[], int tamanho){
-	int meio = tamanho / 2;
+void merge_sort(long int vetor[], long int tamanho){
+	long int meio = tamanho / 2;
 
 	if(tamanho > 1){
 		merge_sort(vetor, meio);
@@ -48,13 +53,36 @@ int merge_sort(int vetor[], int tamanho){
 
 int main(void){
 	
-	int tamanho = 500;
-	int vetor[tamanho];
+	long int tamanho = 500;
+	long int vetor[tamanho];
+	clock_t tInicio, tFim;
+	double tDecorrido;
 
-	preenche_vetor(vetor, tamanho);
+	//leitura do arquivo
+	FILE *fp;
+	fp = fopen("numeros_ES1.txt", "r");
+	if(fp==NULL){
+		printf("Houve erro na abertura do arquivo.\n");
+		return 1;
+	}
+    for (long i = 0; i < tamanho; i++) {
+        fscanf(fp, "%ld", &vetor[i]);
+    }
+    fclose(fp);
+
+
+    printf("Vetor Desordenado:");
 	imprime_vetor(vetor, tamanho);
+	printf("\nVetor Ordenado:");
+
+	tInicio = clock();
 	merge_sort(vetor, tamanho);
+	tFim = clock();
+
+	tDecorrido = ((double) (tFim - tInicio)) / CLOCKS_PER_SEC;
+
 	imprime_vetor(vetor, tamanho);
+	printf("\nTempo de Execução do MergeSort: %lf\n", tDecorrido);
 
 	return 0;
 }
