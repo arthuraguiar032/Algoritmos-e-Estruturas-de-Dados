@@ -1,10 +1,10 @@
 #include "utils.h"
 
-int particiona(int vetor[], int inicio, int fim){
-	int pivo = vetor[fim];
-	int indice = inicio;
+int particiona(long int vetor[], long int inicio, long int fim){
+	long int pivo = vetor[fim];
+	long int indice = inicio;
 
-	for(int i=inicio; i<fim; i++){
+	for(long int i=inicio; i<fim; i++){
 		if(vetor[i]<=pivo){
 			troca(vetor, i, indice);
 			indice++;
@@ -18,7 +18,7 @@ int particiona(int vetor[], int inicio, int fim){
 	return indice;
 }
 
-void quick_sort(int vetor[], int inicio, int fim){
+void quick_sort(long int vetor[], long int inicio, long int fim){
 	if (fim>inicio){
 		int pivo = particiona(vetor, inicio, fim);
 		quick_sort(vetor, inicio, pivo-1);
@@ -27,8 +27,8 @@ void quick_sort(int vetor[], int inicio, int fim){
 }
 
 int main(void){
-	int tamanho = 500;
-	int vetor[tamanho];
+	long int tamanho = 10;
+	long int vetor[tamanho];
 
 	preenche_vetor(vetor, tamanho);
 	imprime_vetor(vetor, tamanho);
