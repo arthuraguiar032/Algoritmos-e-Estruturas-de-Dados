@@ -102,6 +102,18 @@ int Lista_get(ListaLigada* lista, int index){
     return aux->dado;
 }
 
+void Lista_set(ListaLigada* lista, int index, int value){
+    if(lista->tamanho<=index){
+        return;
+    }
+    No* aux = lista->inicio;
+    for(int i=0; i<index; i++){
+        aux = aux->proximo;
+    }
+    aux->dado = value;
+}
+
+
 int main(void){
     ListaLigada *lista = Lista_init();
 
@@ -111,6 +123,10 @@ int main(void){
     Lista_append(lista, 19);
 
     printf("O valor do indice %d da lista é: %d\n", 1, Lista_get(lista, 1));
+
+    Lista_print(lista);
+
+    Lista_set(lista, 0, 1);
 
     Lista_print(lista);
 
