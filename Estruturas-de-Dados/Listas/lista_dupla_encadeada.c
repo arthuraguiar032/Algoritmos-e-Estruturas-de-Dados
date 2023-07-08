@@ -28,17 +28,10 @@ ListaDupla* Lista_init(){
     return lista;
 }
 
-No* Lista_tail(ListaDupla* lista){
-    if(lista->tamanho == 0){
-        return NULL;
-    }
-    return lista->fim;
-}
-
 void Lista_append(ListaDupla* lista, int dado_insert){
-    No* no_insert = malloc(sizeof(No));
-    if(!no_insert){
-        printf("Erro ao inserir na lista.");
+    No* no_insert = (No*)malloc(sizeof(No));
+    if (!no_insert) {
+        fprintf(stderr, "Erro ao inserir na lista.\n");
         return;
     }
     lista->tamanho++;
@@ -47,34 +40,36 @@ void Lista_append(ListaDupla* lista, int dado_insert){
     no_insert->anterior = NULL;
     no_insert->dado = dado_insert;
 
-    if(!lista->inicio){
+    if (!lista->inicio) {
         lista->inicio = no_insert;
+        lista->fim = no_insert;
         return;
     }
 
-    No* ultimo = Lista_tail(lista);
+    No* ultimo = lista->fim;
     no_insert->anterior = ultimo;
     ultimo->proximo = no_insert;
-    return;
+    lista->fim = no_insert;
 }
 
 int Lista_pop(ListaDupla* lista){
     if(!lista->inicio){
         return 0;
     }
-    lista->tamanho--;
 
-    No *ultimo = Lista_tail(lista);
+    No *ultimo = lista->fim;
     int valor = ultimo->dado;
 
     if(lista->tamanho == 1){
         lista->inicio = NULL;
-        free(ultimo);
-        return valor;
+        lista->fim = NULL;
+    }else{
+        No *penultimo = ultimo->anterior;
+        penultimo->proximo = NULL;
+        lista->fim = penultimo;
     }
 
-    No *penultimo = ultimo->anterior;
-    penultimo->proximo = NULL;
+    lista->tamanho--;
     free(ultimo);
     return valor;
 }
@@ -130,14 +125,12 @@ void Lista_set(ListaDupla* lista, int index, int value){
 
 
 int main(void) {
-    printf("Aqui");
     ListaDupla* lista = Lista_init();
-    printf("Aqui");
+
     // Teste Lista_append e Lista_print
     Lista_append(lista, 1);
     Lista_append(lista, 2);
     Lista_append(lista, 3);
-    printf("Aqui");
     Lista_print(lista); // Saída esperada: Lista: 1 2 3
 
     // Teste Lista_pop e Lista_print
